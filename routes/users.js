@@ -21,4 +21,13 @@ router.post('/', async function(req, res, next) {
     }
 });
 
+router.put('/:id', async function(req, res, next) {
+    try {
+        res.json(await users.updateUserInfo(req.params.id, req.body));
+    } catch (err) {
+        console.error(`Error while creating posts`, err.message);
+        next(err);
+    }
+});
+
 module.exports = router;

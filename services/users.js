@@ -44,7 +44,42 @@ async function createUserInfo(user) {
     return {message};
 }
 
+async function updateUserInfo(id, user) {
+    const result = await db.query(
+        `UPDATE users SET 
+                 first_name="${user.first_name}", 
+                 last_name="${user.last_name}", 
+                 gender="${user.gender}", 
+                 date_of_birth="${user.date_of_birth}",
+                 city="${user.city}",
+                 phone_nb="${user.phone_nb}",
+                 religion="${user.religion}",
+                 age="${user.age}",
+                 disability="${user.disability}",
+                 profile="${user.profile}" WHERE id=${id}`
+    );
+    let message = 'Error in updating posts';
+
+    if (result.affectedRows) {
+        return {
+            id: id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            gender: user.gender,
+            date_of_birth: user.date_of_birth,
+            city: user.city,
+            phone_nb: user.phone_nb,
+            religion: user.religion,
+            age: user.age,
+            disability: user.disability,
+            profile: user.profile
+        }
+    }
+    return {message};
+}
+
 module.exports = {
     getAllUsers,
-    createUserInfo
+    createUserInfo,
+    updateUserInfo
 }
