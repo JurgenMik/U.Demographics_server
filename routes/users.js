@@ -30,4 +30,13 @@ router.put('/:id', async function(req, res, next) {
     }
 });
 
+router.delete('/:id', async function(req, res, next) {
+    try {
+        res.json(await users.removeUserInfo(req.params.id));
+    } catch (err) {
+        console.error(`Error while creating posts`, err.message);
+        next(err);
+    }
+});
+
 module.exports = router;

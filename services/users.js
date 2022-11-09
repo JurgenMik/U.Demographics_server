@@ -78,8 +78,21 @@ async function updateUserInfo(id, user) {
     return {message};
 }
 
+async function removeUserInfo(id) {
+    const result = await db.query(
+        `DELETE FROM users WHERE id=${id}`
+    );
+    let message = 'Error in deleting posts';
+
+    if (result.affectedRows) {
+        return {}
+    }
+    return {message};
+}
+
 module.exports = {
     getAllUsers,
     createUserInfo,
-    updateUserInfo
+    updateUserInfo,
+    removeUserInfo
 }
