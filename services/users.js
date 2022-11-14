@@ -18,11 +18,10 @@ async function createUserInfo(user) {
     let religion = user.religion;
     let age = user.age;
     let disability = user.disability;
-    let profile = user.profile;
 
     const result = await db.query(
-        'INSERT INTO `users` (`first_name`, `last_name`, `gender`, `date_of_birth`, `city`, `phone_nb`, `religion`, `age`, `disability`, `profile`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    [firstName, lastName, gender, date_of_birth, city, phone_nb, religion, age, disability, profile]);
+        'INSERT INTO `users` (`first_name`, `last_name`, `gender`, `date_of_birth`, `city`, `phone_nb`, `religion`, `age`, `disability`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [firstName, lastName, gender, date_of_birth, city, phone_nb, religion, age, disability]);
 
     let message = 'Error in creating posts';
 
@@ -38,7 +37,6 @@ async function createUserInfo(user) {
             religion: religion,
             age: age,
             disability: disability,
-            profile: profile
         }
     }
     return {message};
@@ -46,8 +44,8 @@ async function createUserInfo(user) {
 
 async function updateUserInfo(id, user) {
     const result = await db.query(
-        'UPDATE users SET first_name = ?, last_name = ?, gender = ?, date_of_birth = ?, city = ?, phone_nb = ?, religion = ?, age = ?, disability = ?, profile =?  WHERE id= ?;',
-        [user.first_name, user.last_name, user.gender, user.date_of_birth, user.city, user.phone_nb, user.religion, user.age, user.disability, user.profile, id]
+        'UPDATE users SET first_name = ?, last_name = ?, gender = ?, date_of_birth = ?, city = ?, phone_nb = ?, religion = ?, age = ?, disability = ? WHERE id= ?;',
+        [user.first_name, user.last_name, user.gender, user.date_of_birth, user.city, user.phone_nb, user.religion, user.age, user.disability, id]
 
     );
     let message = 'Error in updating posts';
@@ -64,7 +62,6 @@ async function updateUserInfo(id, user) {
             religion: user.religion,
             age: user.age,
             disability: user.disability,
-            profile: user.profile
         }
     }
     return {message};
