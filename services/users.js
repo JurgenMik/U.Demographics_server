@@ -21,8 +21,8 @@ async function createUserInfo(user) {
     let profile = user.profile;
 
     const result = await db.query(
-        "INSERT INTO `users` (`first_name`, `last_name`, `gender`, `date_of_birth`, `city`, `phone_nb`, `religion`, `age`, `disability`, `profile`) VALUES " +
-        "('"+firstName+"', '"+lastName+"', '"+gender+"', '"+date_of_birth+"', '"+city+"', '"+phone_nb+"', '"+religion+"', '"+age+"', '"+disability+"', '"+profile+"')");
+        'INSERT INTO `users` (`first_name`, `last_name`, `gender`, `date_of_birth`, `city`, `phone_nb`, `religion`, `age`, `disability`, `profile`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [firstName, lastName, gender, date_of_birth, city, phone_nb, religion, age, disability, profile]);
 
     let message = 'Error in creating posts';
 
@@ -46,17 +46,9 @@ async function createUserInfo(user) {
 
 async function updateUserInfo(id, user) {
     const result = await db.query(
-        `UPDATE users SET 
-                 first_name="${user.first_name}", 
-                 last_name="${user.last_name}", 
-                 gender="${user.gender}", 
-                 date_of_birth="${user.date_of_birth}",
-                 city="${user.city}",
-                 phone_nb="${user.phone_nb}",
-                 religion="${user.religion}",
-                 age="${user.age}",
-                 disability="${user.disability}",
-                 profile="${user.profile}" WHERE id=${id}`
+        'UPDATE users SET first_name = ?, last_name = ?, gender = ?, date_of_birth = ?, city = ?, phone_nb = ?, religion = ?, age = ?, disability = ?, profile =?  WHERE id= ?;',
+        [user.first_name, user.last_name, user.gender, user.date_of_birth, user.city, user.phone_nb, user.religion, user.age, user.disability, user.profile, id]
+
     );
     let message = 'Error in updating posts';
 
@@ -80,7 +72,7 @@ async function updateUserInfo(id, user) {
 
 async function removeUserInfo(id) {
     const result = await db.query(
-        `DELETE FROM users WHERE id=${id}`
+        `DELETE FROM users WHERE id= ?`, [id]
     );
     let message = 'Error in deleting posts';
 
