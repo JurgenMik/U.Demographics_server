@@ -14,6 +14,15 @@ router.get('/', async  function(req, res, next){
     }
 });
 
+router.get('/search', async  function(req, res, next){
+    try {
+        res.json(await users.search(req.query.query));
+    } catch (err) {
+        console.error(`Error while searching the database`, err.message);
+        next(err);
+    }
+});
+
 router.post('/',
     check('first_name').notEmpty().isString(),
     check('last_name').notEmpty().isString(),

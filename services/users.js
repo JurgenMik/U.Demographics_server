@@ -8,6 +8,13 @@ async function getAllUsers() {
     return helper.emptyOrRows(rows);
 }
 
+async function search(search) {
+    const rows = await db.query(
+        `SELECT * FROM users WHERE first_name = ? OR last_name = ?`, [search, search]
+    );
+    return helper.emptyOrRows(rows);
+}
+
 async function createUserInfo(user) {
     let firstName = user.first_name;
     let lastName = user.last_name;
@@ -83,5 +90,6 @@ module.exports = {
     getAllUsers,
     createUserInfo,
     updateUserInfo,
-    removeUserInfo
+    removeUserInfo,
+    search
 }
